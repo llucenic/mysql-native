@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>prepareProcedure (mysql.connection.prepareProcedure)</title>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+        <link href="style.css" rel="stylesheet" />
+        <script src="script.js" type="text/javascript"></script>
+
+	
+	<link href="search-results.html" rel="prefetch" />
+</head>
+<body>
+	<div id="page-header">
+		<div id="logotype">
+		<span>Documentation</span>
+		<nav>
+			<a href="http://dlang.org/">Dlang.org</a>
+		</nav>
+		</div>
+
+		<form action="search-docs.html" id="search">
+			<input name="searchTerm" placeholder="Find a symbol name..." type="search" />
+			<input type="submit" value="Go" />
+		</form>
+	</div>
+	<div id="page-body">
+		<div id="page-content">
+		<h1>prepareProcedure</h1><div class="breadcrumbs"><a class="breadcrumb" href="mysql.html">mysql</a> <a class="breadcrumb" href="mysql.connection.html">connection</a> </div><div><div class="documentation-comment synopsis"><div><p>Convenience function to create a prepared statement which calls a stored procedure.</p><p>OUT parameters are currently not supported. It should generally be
+possible with MySQL to present them as a result set.</p><p>Be careful that your <tt class="inline-code">numArgs</tt> is correct. If it isn't, you may get a
+<tt class="inline-code">mysql.exceptions.MYX</tt> with a very unclear error message.</p></div></div></div><div class="annotated-prototype"><div class="function-prototype"><div class="attributes"></div><div class="return-type"><a class="name" data-ident="Prepared" href="mysql.prepared.Prepared.html" title="mysql.prepared.Prepared">Prepared</a></div><div class="function-name">prepareProcedure</div><div class="template-parameters" data-count="0"></div><div class="runtime-parameters" data-count="3"><div class="parameters-list toplevel"><span class="paren">(</span><div class="runtime-parameter-item parameter-item"><span class="parameter-type-holder"><span class="parameter-type"><a class="name" data-ident="Connection" href="mysql.connection.Connection.html" title="mysql.connection.Connection">Connection</a></span></span> <span class="parameter-name name" data-ident="conn"><a href="#param-conn">conn</a></span></div><span class="comma">,</span><div class="runtime-parameter-item parameter-item"><span class="parameter-type-holder"><span class="parameter-type"><span class="builtin-type">string</span></span></span> <span class="parameter-name name" data-ident="name"><a href="#param-name">name</a></span></div><span class="comma">,</span><div class="runtime-parameter-item parameter-item"><span class="parameter-type-holder"><span class="parameter-type"><span class="builtin-type">int</span></span></span> <span class="parameter-name name" data-ident="numArgs"><a href="#param-numArgs">numArgs</a></span></div><span class="paren">)</span></div></div><div class="function-contracts"></div></div></div><div><h2 id="parameters">Parameters</h2><dl class="parameter-descriptions"><dt id="param-name"><a class="parameter-name" data-ident="name" href="#param-name">name</a> <span class="parameter-type"><span class="builtin-type">string</span></span></dt><dd><div class="documentation-comment"><div><p>The name of the stored procedure.</p></div></div></dd><dt id="param-numArgs"><a class="parameter-name" data-ident="numArgs" href="#param-numArgs">numArgs</a> <span class="parameter-type"><span class="builtin-type">int</span></span></dt><dd><div class="documentation-comment"><div><p>The number of arguments the stored procedure takes.</p></div></div></dd></dl><h2 id="throws">Throws</h2><div class="documentation-comment throws-description"><div><p><tt class="inline-code">mysql.exceptions.MYX</tt> if the server has a problem.</p></div></div><h2 id="meta">Meta</h2><div class="documentation-comment source-section other-section"><h3 id="source">Source</h3><div><p><a href="source/mysql.connection.d.html#L112">See Implementation</a><br /></p></div></div></div></div>
+		<div id="page-nav"><a class="parent" href="mysql.html">mysql</a> <a class="parent" href="mysql.connection.html">connection</a> 
+		<span class="type-separator">classes</span><ul><li><a class="class" href="mysql.connection.Connection.html">Connection</a></li></ul><span class="type-separator">functions</span><ul><li><a class="function" href="mysql.connection.prepare.html">prepare</a></li><li><a class="function" href="mysql.connection.prepareBackwardCompat.html">prepareBackwardCompat</a></li><li><a class="function" href="mysql.connection.prepareBackwardCompatImpl.html">prepareBackwardCompatImpl</a></li><li><a class="function" href="mysql.connection.prepareFunction.html">prepareFunction</a></li><li><a class="function current" href="mysql.connection.prepareProcedure.html">prepareProcedure</a></li></ul><span class="type-separator">structs</span><ul><li><a class="struct" href="mysql.connection.BackwardCompatPrepared.html">BackwardCompatPrepared</a></li><li><a class="struct" href="mysql.connection.PreparedServerInfo.html">PreparedServerInfo</a></li></ul><span class="type-separator">variables</span><ul><li><a class="variable" href="mysql.connection.defaultClientFlags.html">defaultClientFlags</a></li></ul></div>
+	</div>
+	<div id="page-footer">Page generated by <a href="https://github.com/adamdruppe/adrdox">adrdox</a></div>
+</body>
+</html>

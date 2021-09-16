@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>ConnectionPool (mysql.pool.ConnectionPool)</title>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+        <link href="style.css" rel="stylesheet" />
+        <script src="script.js" type="text/javascript"></script>
+
+	
+	<link href="search-results.html" rel="prefetch" />
+</head>
+<body>
+	<div id="page-header">
+		<div id="logotype">
+		<span>Documentation</span>
+		<nav>
+			<a href="http://dlang.org/">Dlang.org</a>
+		</nav>
+		</div>
+
+		<form action="search-docs.html" id="search">
+			<input name="searchTerm" placeholder="Find a symbol name..." type="search" />
+			<input type="submit" value="Go" />
+		</form>
+	</div>
+	<div id="page-body">
+		<div id="page-content">
+		<h1>ConnectionPool</h1><div class="breadcrumbs"><a class="breadcrumb" href="mysql.html">mysql</a> <a class="breadcrumb" href="mysql.pool.html">pool</a> </div><div><div class="documentation-comment synopsis"><div><p>Vibe.d's
+		<a href="http://vibed.org/api/vibe.core.connectionpool/ConnectionPool">ConnectionPool</a>
+		class.</p><p>Not actually included in module <tt class="inline-code">mysql.pool</tt>. Only listed here for
+		documentation purposes. For ConnectionPool and it's documentation, see:
+		<a href="http://vibed.org/api/vibe.core.connectionpool/ConnectionPool">http://vibed.org/api/vibe.core.connectionpool/ConnectionPool</a></p></div></div></div><div class="annotated-prototype"><div class="aggregate-prototype"><div class="attributes"><div class="versions-container">version(IncludeMySQLPool &amp;&amp; !Have_vibe_core &amp;&amp; MySQLDocs)</div></div><span class="builtin-type">class</span> ConnectionPool (<div class="parameters-list toplevel"><div class="template-parameter-item parameter-item">	<span><span class="name" data-ident="T">T</span></span></div></div>) {<div class="aggregate-member"><a href="mysql.pool.ConnectionPool.this.html"><span class="lang-feature name">this</span>(Connection delegate() connection_factory, uint max_concurrent);</a></div><div class="aggregate-member"><a href="mysql.pool.ConnectionPool.lockConnection.html"><tt class="highlighted"><span class="hid">LockedConnection</span>!<span class="hid">T</span></tt> <span class="name">lockConnection</span>();</a></div><div class="aggregate-member"><a href="mysql.pool.ConnectionPool.maxConcurrency.html"><div class="attributes"></div><tt class="highlighted"><span class="type">uint</span></tt> <span class="name">maxConcurrency</span>;</a></div><div class="aggregate-member"><a href="mysql.pool.ConnectionPool.removeUnused.html"><tt class="highlighted"><span class="type">void</span></tt> <span class="name">removeUnused</span>(void delegate(Connection conn) @(safe) nothrow disconnect_callback);</a></div>}</div></div><h2 id="constructors">Constructors</h2><dl class="member-list constructors"><dt><a href="mysql.pool.ConnectionPool.this.html">this</a><div class="simplified-prototype" style="max-width: 73ch;"><span class="lang-feature name">this</span>(Connection delegate() connection_factory, uint max_concurrent)</div></dt><dd><div><p>See: <a href="http://vibed.org/api/vibe.core.connectionpool/ConnectionPool.this">http://vibed.org/api/vibe.core.connectionpool/ConnectionPool.this</a></p></div></dd></dl><h2 id="members">Members</h2><h3 class="member-list-header hide-from-toc" id="function">Functions</h3><dl class="member-list native"><dt><a href="mysql.pool.ConnectionPool.lockConnection.html">lockConnection</a><div class="simplified-prototype" style="max-width: 38ch;"><tt class="highlighted"><span class="hid">LockedConnection</span>!<span class="hid">T</span></tt> <span class="name">lockConnection</span>()</div></dt><dd><div><p>See: <a href="http://vibed.org/api/vibe.core.connectionpool/ConnectionPool.lockConnection">http://vibed.org/api/vibe.core.connectionpool/ConnectionPool.lockConnection</a></p></div></dd><dt><a href="mysql.pool.ConnectionPool.removeUnused.html">removeUnused</a><div class="simplified-prototype" style="max-width: 93ch;"><tt class="highlighted"><span class="type">void</span></tt> <span class="name">removeUnused</span>(void delegate(Connection conn) @(safe) nothrow disconnect_callback)</div></dt><dd><div><p>See: <a href="https://github.com/vibe-d/vibe-core/blob/24a83434e4c788ebb9859dfaecbe60ad0f6e9983/source/vibe/core/connectionpool.d#L113">https://github.com/vibe-d/vibe-core/blob/24a83434e4c788ebb9859dfaecbe60ad0f6e9983/source/vibe/core/connectionpool.d#L113</a></p></div></dd></dl><h3 class="member-list-header hide-from-toc" id="variable">Variables</h3><dl class="member-list native"><dt><a href="mysql.pool.ConnectionPool.maxConcurrency.html">maxConcurrency</a><div class="simplified-prototype" style="max-width: 22ch;"><tt class="highlighted"><span class="type">uint</span></tt> <span class="name">maxConcurrency</span>;</div></dt><dd><div><p>See: <a href="http://vibed.org/api/vibe.core.connectionpool/ConnectionPool.maxConcurrency">http://vibed.org/api/vibe.core.connectionpool/ConnectionPool.maxConcurrency</a></p></div></dd></dl><div><h2 id="meta">Meta</h2><div class="documentation-comment source-section other-section"><h3 id="source">Source</h3><div><p><a href="source/mysql.pool.d.html#L47">See Implementation</a><br /></p></div></div></div></div>
+		<div id="page-nav"><a class="parent" href="mysql.html">mysql</a> <a class="parent" href="mysql.pool.html">pool</a> 
+		<span class="type-separator">classes</span><ul><li><a class="class current" href="mysql.pool.ConnectionPool.html">ConnectionPool</a></li><li><a class="class" href="mysql.pool.MySQLPool.html">MySQLPool</a></li></ul><span class="type-separator">structs</span><ul><li><a class="struct" href="mysql.pool.LockedConnection.html">LockedConnection</a></li></ul></div>
+	</div>
+	<div id="page-footer">Page generated by <a href="https://github.com/adamdruppe/adrdox">adrdox</a></div>
+</body>
+</html>

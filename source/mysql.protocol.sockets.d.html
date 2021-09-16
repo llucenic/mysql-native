@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>mysql.protocol.sockets source code</title>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+        <link href="../style.css" rel="stylesheet" />
+        <script src="../script.js" type="text/javascript"></script>
+
+	
+	<link href="../search-results.html" rel="prefetch" />
+</head>
+<body>
+	<div id="page-header">
+		<div id="logotype">
+		<span>Documentation</span>
+		<nav>
+			<a href="http://dlang.org/">Dlang.org</a>
+		</nav>
+		</div>
+
+		<form action="../search-docs.html" id="search">
+			<input name="searchTerm" placeholder="Find a symbol name..." type="search" />
+			<input type="submit" value="Go" />
+		</form>
+	</div>
+	<div id="page-body">
+		<div id="page-content">
+		<pre class="d_code highlighted with-line-wrappers"><a class="br" href="#L1" id="L1">1 </a><span class="com">/// Internal - Phobos and vibe.d sockets.</span>
+<a class="br" href="#L2" id="L2">2 </a><span class="kwrd">module</span> <span class="hid">mysql.protocol.sockets</span>;
+<a class="br" href="#L3" id="L3">3 </a>
+<a class="br" href="#L4" id="L4">4 </a><span class="kwrd">import</span> <span class="hid">std.exception</span>;
+<a class="br" href="#L5" id="L5">5 </a><span class="kwrd">import</span> <span class="hid">std.socket</span>;
+<a class="br" href="#L6" id="L6">6 </a>
+<a class="br" href="#L7" id="L7">7 </a><span class="kwrd">import</span> <span class="hid">mysql.exceptions</span>;
+<a class="br" href="#L8" id="L8">8 </a>
+<a class="br" href="#L9" id="L9">9 </a><span class="kwrd">version</span>(<span class="hid">Have_vibe_core</span>)
+<a class="br" href="#L10" id="L10">10 </a>{
+<a class="br" href="#L11" id="L11">11 </a>	<span class="kwrd">static</span> <span class="kwrd">if</span>(<span class="kwrd">__traits</span>(<span class="hid">compiles</span>, (){ <span class="kwrd">import</span> <span class="hid">vibe.core.net</span>; } ))
+<a class="br" href="#L12" id="L12">12 </a>		<span class="kwrd">import</span> <span class="hid">vibe.core.net</span>;
+<a class="br" href="#L13" id="L13">13 </a>	<span class="kwrd">else</span>
+<a class="br" href="#L14" id="L14">14 </a>		<span class="kwrd">static</span> <span class="kwrd">assert</span>(<span class="kwrd">false</span>, <span class="str">&quot;mysql-native can't find Vibe.d's 'vibe.core.net'.&quot;</span>);
+<a class="br" href="#L15" id="L15">15 </a>}
+<a class="br" href="#L16" id="L16">16 </a>
+<a class="br" href="#L17" id="L17">17 </a><span class="com">/// Phobos/Vibe.d type aliases</span>
+<a class="br" href="#L18" id="L18">18 </a><span class="kwrd">alias</span> <a class="hid" href="mysql.protocol.sockets.d.html#L18" title="mysql.protocol.sockets.PlainPhobosSocket">PlainPhobosSocket</a> = <span class="hid">std.socket.TcpSocket</span>;
+<a class="br" href="#L19" id="L19">19 </a><span class="kwrd">version</span>(<span class="hid">Have_vibe_core</span>)
+<a class="br" href="#L20" id="L20">20 </a>{
+<a class="br" href="#L21" id="L21">21 </a>	<span class="kwrd">static</span> <span class="kwrd">import</span> <span class="hid">vibe.core.net</span>;
+<a class="br" href="#L22" id="L22">22 </a>	<span class="kwrd">alias</span> <a class="hid" href="mysql.protocol.sockets.d.html#L27" title="mysql.protocol.sockets.PlainVibeDSocket">PlainVibeDSocket</a> = <span class="hid">vibe.core.net.TCPConnection</span>; <span class="com">///ditto</span>
+<a class="br" href="#L23" id="L23">23 </a>}
+<a class="br" href="#L24" id="L24">24 </a><span class="kwrd">else</span>
+<a class="br" href="#L25" id="L25">25 </a>{
+<a class="br" href="#L26" id="L26">26 </a>	<span class="com">// Dummy types</span>
+<a class="br" href="#L27" id="L27">27 </a>	<span class="kwrd">alias</span> <a class="hid" href="mysql.protocol.sockets.d.html#L27" title="mysql.protocol.sockets.PlainVibeDSocket">PlainVibeDSocket</a> = <span class="hid">Object</span>; <span class="com">///ditto</span>
+<a class="br" href="#L28" id="L28">28 </a>}
+<a class="br" href="#L29" id="L29">29 </a>
+<a class="br" href="#L30" id="L30">30 </a><span class="kwrd">alias</span> <a class="hid" href="mysql.protocol.sockets.d.html#L30" title="mysql.protocol.sockets.OpenSocketCallbackPhobos">OpenSocketCallbackPhobos</a> = <a class="hid" href="mysql.protocol.sockets.d.html#L18" title="mysql.protocol.sockets.PlainPhobosSocket">PlainPhobosSocket</a> <span class="kwrd">function</span>(<span class="type">string</span>,<span class="type">ushort</span>);
+<a class="br" href="#L31" id="L31">31 </a><span class="kwrd">alias</span> <a class="hid" href="mysql.protocol.sockets.d.html#L31" title="mysql.protocol.sockets.OpenSocketCallbackVibeD">OpenSocketCallbackVibeD</a> = <a class="hid" href="mysql.protocol.sockets.d.html#L27" title="mysql.protocol.sockets.PlainVibeDSocket">PlainVibeDSocket</a> <span class="kwrd">function</span>(<span class="type">string</span>,<span class="type">ushort</span>);
+<a class="br" href="#L32" id="L32">32 </a>
+<a class="br" href="#L33" id="L33">33 </a><span class="kwrd">enum</span> <a class="hid" href="mysql.protocol.sockets.d.html#L33" title="mysql.protocol.sockets.MySQLSocketType">MySQLSocketType</a> { <span class="hid">phobos</span>, <span class="hid">vibed</span> }
+<a class="br" href="#L34" id="L34">34 </a>
+<a class="br" href="#L35" id="L35">35 </a><span class="com">/// A minimal socket interface similar to Vibe.d's TCPConnection.</span>
+<a class="br" href="#L36" id="L36">36 </a><span class="com">/// Used to wrap both Phobos and Vibe.d sockets with a common interface.</span>
+<a class="br" href="#L37" id="L37">37 </a><span class="kwrd">interface</span> <a class="hid" href="mysql.protocol.sockets.d.html#L37" title="mysql.protocol.sockets.MySQLSocket">MySQLSocket</a>
+<a class="br" href="#L38" id="L38">38 </a>{
+<a class="br" href="#L39" id="L39">39 </a>	<span class="type">void</span> <span class="hid">close</span>();
+<a class="br" href="#L40" id="L40">40 </a>	@<span class="hid">property</span> <span class="type">bool</span> <span class="hid">connected</span>() <span class="kwrd">const</span>;
+<a class="br" href="#L41" id="L41">41 </a>	<span class="type">void</span> <span class="hid">read</span>(<span class="type">ubyte</span>[] <span class="hid">dst</span>);
+<a class="br" href="#L42" id="L42">42 </a>	<span class="type">void</span> <span class="hid">write</span>(<span class="kwrd">in</span> <span class="type">ubyte</span>[] <span class="hid">bytes</span>);
+<a class="br" href="#L43" id="L43">43 </a>
+<a class="br" href="#L44" id="L44">44 </a>	<span class="type">void</span> <span class="hid">acquire</span>();
+<a class="br" href="#L45" id="L45">45 </a>	<span class="type">void</span> <span class="hid">release</span>();
+<a class="br" href="#L46" id="L46">46 </a>	<span class="type">bool</span> <span class="hid">isOwner</span>();
+<a class="br" href="#L47" id="L47">47 </a>	<span class="type">bool</span> <span class="hid">amOwner</span>();
+<a class="br" href="#L48" id="L48">48 </a>}
+<a class="br" href="#L49" id="L49">49 </a>
+<a class="br" href="#L50" id="L50">50 </a><span class="com">/// Wraps a Phobos socket with the common interface</span>
+<a class="br" href="#L51" id="L51">51 </a><span class="kwrd">class</span> <a class="hid" href="mysql.protocol.sockets.d.html#L51" title="mysql.protocol.sockets.MySQLSocketPhobos">MySQLSocketPhobos</a> : <a class="hid" href="mysql.protocol.sockets.d.html#L37" title="mysql.protocol.sockets.MySQLSocket">MySQLSocket</a>
+<a class="br" href="#L52" id="L52">52 </a>{
+<a class="br" href="#L53" id="L53">53 </a>	<span class="kwrd">private</span> <a class="hid" href="mysql.protocol.sockets.d.html#L18" title="mysql.protocol.sockets.PlainPhobosSocket">PlainPhobosSocket</a> <span class="hid">socket</span>;
+<a class="br" href="#L54" id="L54">54 </a>
+<a class="br" href="#L55" id="L55">55 </a>	<span class="com">/// The socket should already be open</span>
+<a class="br" href="#L56" id="L56">56 </a>	<span class="kwrd">this</span>(<a class="hid" href="mysql.protocol.sockets.d.html#L18" title="mysql.protocol.sockets.PlainPhobosSocket">PlainPhobosSocket</a> <span class="hid">socket</span>)
+<a class="br" href="#L57" id="L57">57 </a>	{
+<a class="br" href="#L58" id="L58">58 </a>		<span class="hid">enforce</span>!<span class="hid">MYX</span>(<span class="hid">socket</span>, <span class="str">&quot;Tried to use a null Phobos socket - Maybe the 'openSocket' callback returned null?&quot;</span>);
+<a class="br" href="#L59" id="L59">59 </a>		<span class="hid">enforce</span>!<span class="hid">MYX</span>(<span class="hid">socket.isAlive</span>, <span class="str">&quot;Tried to use a closed Phobos socket - Maybe the 'openSocket' callback created a socket but forgot to open it?&quot;</span>);
+<a class="br" href="#L60" id="L60">60 </a>		<span class="kwrd">this</span>.<span class="hid">socket</span> = <span class="hid">socket</span>;
+<a class="br" href="#L61" id="L61">61 </a>	}
+<a class="br" href="#L62" id="L62">62 </a>
+<a class="br" href="#L63" id="L63">63 </a>	<span class="kwrd">invariant</span>()
+<a class="br" href="#L64" id="L64">64 </a>	{
+<a class="br" href="#L65" id="L65">65 </a>		<span class="kwrd">assert</span>(<span class="hid">socket</span> !<span class="kwrd">is</span> <span class="kwrd">null</span>);
+<a class="br" href="#L66" id="L66">66 </a>	}
+<a class="br" href="#L67" id="L67">67 </a>
+<a class="br" href="#L68" id="L68">68 </a>	<span class="type">void</span> <span class="hid">close</span>()
+<a class="br" href="#L69" id="L69">69 </a>	{
+<a class="br" href="#L70" id="L70">70 </a>		<span class="hid">socket.shutdown</span>(<span class="hid">SocketShutdown.BOTH</span>);
+<a class="br" href="#L71" id="L71">71 </a>		<span class="hid">socket.close</span>();
+<a class="br" href="#L72" id="L72">72 </a>	}
+<a class="br" href="#L73" id="L73">73 </a>
+<a class="br" href="#L74" id="L74">74 </a>	@<span class="hid">property</span> <span class="type">bool</span> <span class="hid">connected</span>() <span class="kwrd">const</span>
+<a class="br" href="#L75" id="L75">75 </a>	{
+<a class="br" href="#L76" id="L76">76 </a>		<span class="kwrd">return</span> <span class="hid">socket.isAlive</span>;
+<a class="br" href="#L77" id="L77">77 </a>	}
+<a class="br" href="#L78" id="L78">78 </a>
+<a class="br" href="#L79" id="L79">79 </a>	<span class="type">void</span> <span class="hid">read</span>(<span class="type">ubyte</span>[] <span class="hid">dst</span>)
+<a class="br" href="#L80" id="L80">80 </a>	{
+<a class="br" href="#L81" id="L81">81 </a>		<span class="com">// Note: I'm a little uncomfortable with this line as it doesn't</span>
+<a class="br" href="#L82" id="L82">82 </a>		<span class="com">// (and can't) update Connection._open. Not sure what can be done,</span>
+<a class="br" href="#L83" id="L83">83 </a>		<span class="com">// but perhaps Connection._open should be eliminated in favor of</span>
+<a class="br" href="#L84" id="L84">84 </a>		<span class="com">// querying the socket's opened/closed state directly.</span>
+<a class="br" href="#L85" id="L85">85 </a>		<span class="kwrd">scope</span>(<span class="hid">failure</span>) <span class="hid">socket.close</span>();
+<a class="br" href="#L86" id="L86">86 </a>
+<a class="br" href="#L87" id="L87">87 </a>		<span class="kwrd">for</span> (<span class="hid">size_t</span> <span class="hid">off</span>, <span class="hid">len</span>; <span class="hid">off</span> &lt; <span class="hid">dst.length</span>; <span class="hid">off</span> += <span class="hid">len</span>) {
+<a class="br" href="#L88" id="L88">88 </a>			<span class="hid">len</span> = <span class="hid">socket.receive</span>(<span class="hid">dst</span>[<span class="hid">off</span>..$]);
+<a class="br" href="#L89" id="L89">89 </a>			<span class="hid">enforce</span>!<span class="hid">MYX</span>(<span class="hid">len</span> != <span class="num">0</span>, <span class="str">&quot;Server closed the connection&quot;</span>);
+<a class="br" href="#L90" id="L90">90 </a>			<span class="hid">enforce</span>!<span class="hid">MYX</span>(<span class="hid">len</span> != <span class="hid">socket.ERROR</span>, <span class="str">&quot;Received std.socket.Socket.ERROR&quot;</span>);
+<a class="br" href="#L91" id="L91">91 </a>		}
+<a class="br" href="#L92" id="L92">92 </a>	}
+<a class="br" href="#L93" id="L93">93 </a>
+<a class="br" href="#L94" id="L94">94 </a>	<span class="type">void</span> <span class="hid">write</span>(<span class="kwrd">in</span> <span class="type">ubyte</span>[] <span class="hid">bytes</span>)
+<a class="br" href="#L95" id="L95">95 </a>	{
+<a class="br" href="#L96" id="L96">96 </a>		<span class="hid">socket.send</span>(<span class="hid">bytes</span>);
+<a class="br" href="#L97" id="L97">97 </a>	}
+<a class="br" href="#L98" id="L98">98 </a>
+<a class="br" href="#L99" id="L99">99 </a>	<span class="type">void</span> <span class="hid">acquire</span>() { <span class="com">/+ Do nothing +/</span> }
+<a class="br" href="#L100" id="L100">100 </a>	<span class="type">void</span> <span class="hid">release</span>() { <span class="com">/+ Do nothing +/</span> }
+<a class="br" href="#L101" id="L101">101 </a>	<span class="type">bool</span> <span class="hid">isOwner</span>() { <span class="kwrd">return</span> <span class="kwrd">true</span>; }
+<a class="br" href="#L102" id="L102">102 </a>	<span class="type">bool</span> <span class="hid">amOwner</span>() { <span class="kwrd">return</span> <span class="kwrd">true</span>; }
+<a class="br" href="#L103" id="L103">103 </a>}
+<a class="br" href="#L104" id="L104">104 </a>
+<a class="br" href="#L105" id="L105">105 </a><span class="kwrd">version</span>(<span class="hid">Have_vibe_core</span>) {
+<a class="br" href="#L106" id="L106">106 </a>	<span class="com">/// Wraps a Vibe.d socket with the common interface</span>
+<a class="br" href="#L107" id="L107">107 </a>	<span class="kwrd">class</span> <a class="hid" href="mysql.protocol.sockets.d.html#L107" title="mysql.protocol.sockets.MySQLSocketVibeD">MySQLSocketVibeD</a> : <a class="hid" href="mysql.protocol.sockets.d.html#L37" title="mysql.protocol.sockets.MySQLSocket">MySQLSocket</a>
+<a class="br" href="#L108" id="L108">108 </a>	{
+<a class="br" href="#L109" id="L109">109 </a>		<span class="kwrd">private</span> <a class="hid" href="mysql.protocol.sockets.d.html#L27" title="mysql.protocol.sockets.PlainVibeDSocket">PlainVibeDSocket</a> <span class="hid">socket</span>;
+<a class="br" href="#L110" id="L110">110 </a>
+<a class="br" href="#L111" id="L111">111 </a>		<span class="com">/// The socket should already be open</span>
+<a class="br" href="#L112" id="L112">112 </a>		<span class="kwrd">this</span>(<a class="hid" href="mysql.protocol.sockets.d.html#L27" title="mysql.protocol.sockets.PlainVibeDSocket">PlainVibeDSocket</a> <span class="hid">socket</span>)
+<a class="br" href="#L113" id="L113">113 </a>		{
+<a class="br" href="#L114" id="L114">114 </a>			<span class="hid">enforce</span>!<span class="hid">MYX</span>(<span class="hid">socket</span>, <span class="str">&quot;Tried to use a null Vibe.d socket - Maybe the 'openSocket' callback returned null?&quot;</span>);
+<a class="br" href="#L115" id="L115">115 </a>			<span class="hid">enforce</span>!<span class="hid">MYX</span>(<span class="hid">socket.connected</span>, <span class="str">&quot;Tried to use a closed Vibe.d socket - Maybe the 'openSocket' callback created a socket but forgot to open it?&quot;</span>);
+<a class="br" href="#L116" id="L116">116 </a>			<span class="kwrd">this</span>.<span class="hid">socket</span> = <span class="hid">socket</span>;
+<a class="br" href="#L117" id="L117">117 </a>		}
+<a class="br" href="#L118" id="L118">118 </a>
+<a class="br" href="#L119" id="L119">119 </a>		<span class="kwrd">invariant</span>()
+<a class="br" href="#L120" id="L120">120 </a>		{
+<a class="br" href="#L121" id="L121">121 </a>			<span class="com">// vibe-core (used by default as of vibe.d v0.8.3) changed</span>
+<a class="br" href="#L122" id="L122">122 </a>			<span class="com">// TCPConnection from an interface to a struct, so checking</span>
+<a class="br" href="#L123" id="L123">123 </a>			<span class="com">// for null is no longer needed.</span>
+<a class="br" href="#L124" id="L124">124 </a>			<span class="kwrd">static</span> <span class="kwrd">if</span>(<span class="kwrd">is</span>(<span class="hid">socket</span> == <span class="kwrd">interface</span>))
+<a class="br" href="#L125" id="L125">125 </a>				<span class="kwrd">assert</span>(<span class="hid">socket</span> !<span class="kwrd">is</span> <span class="kwrd">null</span>);
+<a class="br" href="#L126" id="L126">126 </a>		}
+<a class="br" href="#L127" id="L127">127 </a>
+<a class="br" href="#L128" id="L128">128 </a>		<span class="type">void</span> <span class="hid">close</span>()
+<a class="br" href="#L129" id="L129">129 </a>		{
+<a class="br" href="#L130" id="L130">130 </a>			<span class="hid">socket.close</span>();
+<a class="br" href="#L131" id="L131">131 </a>		}
+<a class="br" href="#L132" id="L132">132 </a>
+<a class="br" href="#L133" id="L133">133 </a>		@<span class="hid">property</span> <span class="type">bool</span> <span class="hid">connected</span>() <span class="kwrd">const</span>
+<a class="br" href="#L134" id="L134">134 </a>		{
+<a class="br" href="#L135" id="L135">135 </a>			<span class="kwrd">return</span> <span class="hid">socket.connected</span>;
+<a class="br" href="#L136" id="L136">136 </a>		}
+<a class="br" href="#L137" id="L137">137 </a>
+<a class="br" href="#L138" id="L138">138 </a>		<span class="type">void</span> <span class="hid">read</span>(<span class="type">ubyte</span>[] <span class="hid">dst</span>)
+<a class="br" href="#L139" id="L139">139 </a>		{
+<a class="br" href="#L140" id="L140">140 </a>			<span class="hid">socket.read</span>(<span class="hid">dst</span>);
+<a class="br" href="#L141" id="L141">141 </a>		}
+<a class="br" href="#L142" id="L142">142 </a>
+<a class="br" href="#L143" id="L143">143 </a>		<span class="type">void</span> <span class="hid">write</span>(<span class="kwrd">in</span> <span class="type">ubyte</span>[] <span class="hid">bytes</span>)
+<a class="br" href="#L144" id="L144">144 </a>		{
+<a class="br" href="#L145" id="L145">145 </a>			<span class="hid">socket.write</span>(<span class="hid">bytes</span>);
+<a class="br" href="#L146" id="L146">146 </a>		}
+<a class="br" href="#L147" id="L147">147 </a>
+<a class="br" href="#L148" id="L148">148 </a>		<span class="kwrd">static</span> <span class="kwrd">if</span> (<span class="kwrd">is</span>(<span class="kwrd">typeof</span>(&amp;<span class="hid">TCPConnection.isOwner</span>))) {
+<a class="br" href="#L149" id="L149">149 </a>			<span class="type">void</span> <span class="hid">acquire</span>() { <span class="hid">socket.acquire</span>(); }
+<a class="br" href="#L150" id="L150">150 </a>			<span class="type">void</span> <span class="hid">release</span>() { <span class="hid">socket.release</span>(); }
+<a class="br" href="#L151" id="L151">151 </a>			<span class="type">bool</span> <span class="hid">isOwner</span>() { <span class="kwrd">return</span> <span class="hid">socket.isOwner</span>(); }
+<a class="br" href="#L152" id="L152">152 </a>			<span class="type">bool</span> <span class="hid">amOwner</span>() { <span class="kwrd">return</span> <span class="hid">socket.isOwner</span>(); }
+<a class="br" href="#L153" id="L153">153 </a>		} <span class="kwrd">else</span> {
+<a class="br" href="#L154" id="L154">154 </a>			<span class="type">void</span> <span class="hid">acquire</span>() { <span class="com">/+ Do nothing +/</span> }
+<a class="br" href="#L155" id="L155">155 </a>			<span class="type">void</span> <span class="hid">release</span>() { <span class="com">/+ Do nothing +/</span> }
+<a class="br" href="#L156" id="L156">156 </a>			<span class="type">bool</span> <span class="hid">isOwner</span>() { <span class="kwrd">return</span> <span class="kwrd">true</span>; }
+<a class="br" href="#L157" id="L157">157 </a>			<span class="type">bool</span> <span class="hid">amOwner</span>() { <span class="kwrd">return</span> <span class="kwrd">true</span>; }
+<a class="br" href="#L158" id="L158">158 </a>		}
+<a class="br" href="#L159" id="L159">159 </a>	}
+<a class="br" href="#L160" id="L160">160 </a>}</pre></div>
+		<div id="page-nav">
+		<div id="source-navigation"><div class="list-holder"><ul><li><a class="docs" href="../mysql.protocol.sockets.html">[Docs] </a><a href="#L1">mysql.protocol.sockets</a><ul><li><a href="#L4">std.exception</a></li><li><a href="#L5">std.socket</a></li><li><a href="#L7">mysql.exceptions</a></li><li><a href="#L12">vibe.core.net</a></li><li><a class="docs" href="../mysql.protocol.sockets.PlainPhobosSocket.html">[Docs] </a><a href="#L18">PlainPhobosSocket</a></li><li><a href="#L21">vibe.core.net</a></li><li><a href="#L22">PlainVibeDSocket</a></li><li><a href="#L27">PlainVibeDSocket</a></li><li><a href="#L30">OpenSocketCallbackPhobos</a></li><li><a href="#L31">OpenSocketCallbackVibeD</a></li><li><a href="#L33">MySQLSocketType</a></li><li><a class="docs" href="../mysql.protocol.sockets.MySQLSocket.html">[Docs] </a><a href="#L37">MySQLSocket</a><ul><li><a href="#L39">close</a></li><li><a href="#L40">connected</a></li><li><a href="#L41">read</a></li><li><a href="#L42">write</a></li><li><a href="#L44">acquire</a></li><li><a href="#L45">release</a></li><li><a href="#L46">isOwner</a></li><li><a href="#L47">amOwner</a></li></ul></li><li><a class="docs" href="../mysql.protocol.sockets.MySQLSocketPhobos.html">[Docs] </a><a href="#L51">MySQLSocketPhobos</a><ul><li><a href="#L53">socket</a></li><li><a class="docs" href="../mysql.protocol.sockets.MySQLSocketPhobos.this.html">[Docs] </a><a href="#L56">this</a></li><li><a href="#L68">close</a></li><li><a href="#L74">connected</a></li><li><a href="#L79">read</a></li><li><a href="#L94">write</a></li><li><a href="#L99">acquire</a></li><li><a href="#L100">release</a></li><li><a href="#L101">isOwner</a></li><li><a href="#L102">amOwner</a></li></ul></li><li><a class="docs" href="../mysql.protocol.sockets.MySQLSocketVibeD.html">[Docs] </a><a href="#L107">MySQLSocketVibeD</a><ul><li><a href="#L109">socket</a></li><li><a class="docs" href="../mysql.protocol.sockets.MySQLSocketVibeD.this.html">[Docs] </a><a href="#L112">this</a></li><li><a href="#L128">close</a></li><li><a href="#L133">connected</a></li><li><a href="#L138">read</a></li><li><a href="#L143">write</a></li><li><a href="#L149">acquire</a></li><li><a href="#L150">release</a></li><li><a href="#L151">isOwner</a></li><li><a href="#L152">amOwner</a></li><li><a href="#L154">acquire</a></li><li><a href="#L155">release</a></li><li><a href="#L156">isOwner</a></li><li><a href="#L157">amOwner</a></li></ul></li></ul></li></ul></div></div></div>
+	</div>
+	<div id="page-footer">Page generated by <a href="https://github.com/adamdruppe/adrdox">adrdox</a></div>
+</body>
+</html>

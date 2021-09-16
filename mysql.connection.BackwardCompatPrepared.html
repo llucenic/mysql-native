@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>BackwardCompatPrepared (mysql.connection.BackwardCompatPrepared)</title>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+        <link href="style.css" rel="stylesheet" />
+        <script src="script.js" type="text/javascript"></script>
+
+	
+	<link href="search-results.html" rel="prefetch" />
+</head>
+<body>
+	<div id="page-header">
+		<div id="logotype">
+		<span>Documentation</span>
+		<nav>
+			<a href="http://dlang.org/">Dlang.org</a>
+		</nav>
+		</div>
+
+		<form action="search-docs.html" id="search">
+			<input name="searchTerm" placeholder="Find a symbol name..." type="search" />
+			<input type="submit" value="Go" />
+		</form>
+	</div>
+	<div id="page-body">
+		<div id="page-content">
+		<h1>BackwardCompatPrepared</h1><div class="breadcrumbs"><a class="breadcrumb" href="mysql.html">mysql</a> <a class="breadcrumb" href="mysql.connection.html">connection</a> </div><div><div class="documentation-comment synopsis"><div><p>This is a wrapper over <tt class="inline-code">mysql.prepared.Prepared</tt>, provided ONLY as a
+temporary aid in upgrading to mysql-native v2.0.0 and its
+new connection-independent model of prepared statements. See the
+<a href="https://github.com/mysql-d/mysql-native/blob/master/MIGRATING_TO_V2.md">migration guide</a>
+for more info.</p><p>In most cases, this layer shouldn't even be needed. But if you have many
+lines of code making calls to exec/query the same prepared statement,
+then this may be helpful.</p><p>To use this temporary compatability layer, change instances of:</p><pre class="d_code highlighted"><span class="kwrd">auto</span> <span class="hid">stmt</span> = <span class="hid">conn</span>.<span class="hid">prepare</span>(...);</pre><p>to this:</p><pre class="d_code highlighted"><span class="kwrd">auto</span> <span class="hid">stmt</span> = <span class="hid">conn</span>.<span class="hid">prepareBackwardCompat</span>(...);</pre><p>And then your prepared statement should work as before.</p><p>BUT DO NOT LEAVE IT LIKE THIS! Ultimately, you should update
+your prepared statement code to the mysql-native v2.0.0 API, by changing
+instances of:</p><pre class="d_code highlighted"><span class="hid">stmt</span>.<span class="hid">exec</span>()
+<span class="hid">stmt</span>.<span class="hid">query</span>()
+<span class="hid">stmt</span>.<span class="hid">queryRow</span>()
+<span class="hid">stmt</span>.<span class="hid">queryRowTuple</span>(<span class="hid">outputArgs</span>...)
+<span class="hid">stmt</span>.<span class="hid">queryValue</span>()</pre><p>to this:</p><pre class="d_code highlighted"><span class="hid">conn</span>.<span class="hid">exec</span>(<span class="hid">stmt</span>)
+<span class="hid">conn</span>.<span class="hid">query</span>(<span class="hid">stmt</span>)
+<span class="hid">conn</span>.<span class="hid">queryRow</span>(<span class="hid">stmt</span>)
+<span class="hid">conn</span>.<span class="hid">queryRowTuple</span>(<span class="hid">stmt</span>, <span class="hid">outputArgs</span>...)
+<span class="hid">conn</span>.<span class="hid">queryValue</span>(<span class="hid">stmt</span>)</pre><p>Both of the above syntaxes can be used with a <tt class="inline-code">BackwardCompatPrepared</tt>
+(the <tt class="inline-code">Connection</tt> passed directly to <tt class="inline-code">mysql.commands.exec</tt>/<tt class="inline-code">mysql.commands.query</tt>
+will override the one embedded associated with your <tt class="inline-code">BackwardCompatPrepared</tt>).</p><p>Once all of your code is updated, you can change <tt class="inline-code">prepareBackwardCompat</tt>
+back to <tt class="inline-code">prepare</tt> again, and your upgrade will be complete.</p></div></div></div><div class="annotated-prototype"><div class="aggregate-prototype"><div class="attributes"></div><span class="builtin-type">struct</span> BackwardCompatPrepared  {<div class="aggregate-member"><div class="attributes"></div><tt class="highlighted"><span class="hid">Prepared</span></tt> <span class="name">_prepared</span>;</div><div class="aggregate-member"><a href="mysql.connection.BackwardCompatPrepared.prepared.html"><tt class="highlighted"><span class="hid">Prepared</span></tt> <span class="name">prepared</span> [@property getter];</a></div><div class="aggregate-member"><a href="mysql.connection.BackwardCompatPrepared.exec.html"><tt class="highlighted"><span class="type">ulong</span></tt> <span class="name">exec</span>();</a></div><div class="aggregate-member"><a href="mysql.connection.BackwardCompatPrepared.query.html"><tt class="highlighted"><span class="hid">ResultRange</span></tt> <span class="name">query</span>();</a></div><div class="aggregate-member"><a href="mysql.connection.BackwardCompatPrepared.queryRow.html"><tt class="highlighted"><span class="hid">Nullable</span>!<span class="hid">Row</span></tt> <span class="name">queryRow</span>();</a></div><div class="aggregate-member"><a href="mysql.connection.BackwardCompatPrepared.queryRowTuple.html"><tt class="highlighted"><span class="type">void</span></tt> <span class="name">queryRowTuple</span>(T args);</a></div><div class="aggregate-member"><a href="mysql.connection.BackwardCompatPrepared.queryValue.html"><tt class="highlighted"><span class="hid">Nullable</span>!<span class="hid">Variant</span></tt> <span class="name">queryValue</span>();</a></div>}</div></div><h2 id="alias-this">Alias This</h2><div><a href="mysql.connection.BackwardCompatPrepared._prepared.html">_prepared</a></div><h2 id="members">Members</h2><h3 class="member-list-header hide-from-toc" id="function">Functions</h3><dl class="member-list native"><dt><a href="mysql.connection.BackwardCompatPrepared.exec.html">exec</a><div class="simplified-prototype" style="max-width: 25ch;"><span class="deprecated-decl">deprecated</span> <tt class="highlighted"><span class="type">ulong</span></tt> <span class="name">exec</span>()</div></dt><dt><a href="mysql.connection.BackwardCompatPrepared.query.html">query</a><div class="simplified-prototype" style="max-width: 33ch;"><span class="deprecated-decl">deprecated</span> <tt class="highlighted"><span class="hid">ResultRange</span></tt> <span class="name">query</span>()</div></dt><dt><a href="mysql.connection.BackwardCompatPrepared.queryRow.html">queryRow</a><div class="simplified-prototype" style="max-width: 37ch;"><span class="deprecated-decl">deprecated</span> <tt class="highlighted"><span class="hid">Nullable</span>!<span class="hid">Row</span></tt> <span class="name">queryRow</span>()</div></dt><dt><a href="mysql.connection.BackwardCompatPrepared.queryRowTuple.html">queryRowTuple</a><div class="simplified-prototype" style="max-width: 40ch;"><span class="deprecated-decl">deprecated</span> <tt class="highlighted"><span class="type">void</span></tt> <span class="name">queryRowTuple</span>(T args)</div></dt><dt><a href="mysql.connection.BackwardCompatPrepared.queryValue.html">queryValue</a><div class="simplified-prototype" style="max-width: 44ch;"><span class="deprecated-decl">deprecated</span> <tt class="highlighted"><span class="hid">Nullable</span>!<span class="hid">Variant</span></tt> <span class="name">queryValue</span>()</div></dt><dd><div><p>This function is provided ONLY as a temporary aid in upgrading to mysql-native v2.0.0.</p></div></dd></dl><h3 class="member-list-header hide-from-toc" id="property">Properties</h3><dl class="member-list native"><dt><a href="mysql.connection.BackwardCompatPrepared.prepared.html">prepared</a><div class="simplified-prototype" style="max-width: 39ch;"><tt class="highlighted"><span class="hid">Prepared</span></tt> <span class="name">prepared</span> [@property getter]</div></dt><dd><div><p>Access underlying <tt class="inline-code">Prepared</tt></p></div></dd></dl><div><h2 id="meta">Meta</h2><div class="documentation-comment source-section other-section"><h3 id="source">Source</h3><div><p><a href="source/mysql.connection.d.html#L228">See Implementation</a><br /></p></div></div></div></div>
+		<div id="page-nav"><a class="parent" href="mysql.html">mysql</a> <a class="parent" href="mysql.connection.html">connection</a> 
+		<span class="type-separator">classes</span><ul><li><a class="class" href="mysql.connection.Connection.html">Connection</a></li></ul><span class="type-separator">functions</span><ul><li><a class="function" href="mysql.connection.prepare.html">prepare</a></li><li><a class="function" href="mysql.connection.prepareBackwardCompat.html">prepareBackwardCompat</a></li><li><a class="function" href="mysql.connection.prepareBackwardCompatImpl.html">prepareBackwardCompatImpl</a></li><li><a class="function" href="mysql.connection.prepareFunction.html">prepareFunction</a></li><li><a class="function" href="mysql.connection.prepareProcedure.html">prepareProcedure</a></li></ul><span class="type-separator">structs</span><ul><li><a class="struct current" href="mysql.connection.BackwardCompatPrepared.html">BackwardCompatPrepared</a></li><li><a class="struct" href="mysql.connection.PreparedServerInfo.html">PreparedServerInfo</a></li></ul><span class="type-separator">variables</span><ul><li><a class="variable" href="mysql.connection.defaultClientFlags.html">defaultClientFlags</a></li></ul></div>
+	</div>
+	<div id="page-footer">Page generated by <a href="https://github.com/adamdruppe/adrdox">adrdox</a></div>
+</body>
+</html>
