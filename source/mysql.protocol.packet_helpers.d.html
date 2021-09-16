@@ -53,10 +53,10 @@
 <a class="br" href="#L25" id="L25">25 </a>
 <a class="br" href="#L26" id="L26">26 </a>Returns: A populated or default initialized TimeDiff struct.
 <a class="br" href="#L27" id="L27">27 </a>+/</span>
-<a class="br" href="#L28" id="L28">28 </a><a class="hid" href="mysql.types.d.html#L11" title="mysql.types.TimeDiff">TimeDiff</a> <a class="hid" href="mysql.protocol.packet_helpers.d.html#L28" title="mysql.protocol.packet_helpers.toTimeDiff">toTimeDiff</a>(<span class="kwrd">in</span> <span class="type">ubyte</span>[] <span class="hid">a</span>) <span class="kwrd">pure</span>
+<a class="br" href="#L28" id="L28">28 </a><span class="hid">TimeDiff</span> <a class="hid" href="mysql.protocol.packet_helpers.d.html#L28" title="mysql.protocol.packet_helpers.toTimeDiff">toTimeDiff</a>(<span class="kwrd">in</span> <span class="type">ubyte</span>[] <span class="hid">a</span>) <span class="kwrd">pure</span>
 <a class="br" href="#L29" id="L29">29 </a>{
 <a class="br" href="#L30" id="L30">30 </a>	<span class="hid">enforce</span>!<span class="hid">MYXProtocol</span>(<span class="hid">a.length</span>, <span class="str">&quot;Supplied byte array is zero length&quot;</span>);
-<a class="br" href="#L31" id="L31">31 </a>	<a class="hid" href="mysql.types.d.html#L11" title="mysql.types.TimeDiff">TimeDiff</a> <span class="hid">td</span>;
+<a class="br" href="#L31" id="L31">31 </a>	<span class="hid">TimeDiff</span> <span class="hid">td</span>;
 <a class="br" href="#L32" id="L32">32 </a>	<span class="type">uint</span> <span class="hid">l</span> = <span class="hid">a</span>[<span class="num">0</span>];
 <a class="br" href="#L33" id="L33">33 </a>	<span class="hid">enforce</span>!<span class="hid">MYXProtocol</span>(<span class="hid">l</span> == <span class="num">0</span> || <span class="hid">l</span> == <span class="num">5</span> || <span class="hid">l</span> == <span class="num">8</span> || <span class="hid">l</span> == <span class="num">12</span>, <span class="str">&quot;Bad Time length in binary row.&quot;</span>);
 <a class="br" href="#L34" id="L34">34 </a>	<span class="kwrd">if</span> (<span class="hid">l</span> &gt;= <span class="num">5</span>)
@@ -83,9 +83,9 @@
 <a class="br" href="#L55" id="L55">55 </a>Params: s = A string representation of the time difference.
 <a class="br" href="#L56" id="L56">56 </a>Returns: A populated or default initialized TimeDiff struct.
 <a class="br" href="#L57" id="L57">57 </a>+/</span>
-<a class="br" href="#L58" id="L58">58 </a><a class="hid" href="mysql.types.d.html#L11" title="mysql.types.TimeDiff">TimeDiff</a> <a class="hid" href="mysql.protocol.packet_helpers.d.html#L28" title="mysql.protocol.packet_helpers.toTimeDiff">toTimeDiff</a>(<span class="type">string</span> <span class="hid">s</span>)
+<a class="br" href="#L58" id="L58">58 </a><span class="hid">TimeDiff</span> <a class="hid" href="mysql.protocol.packet_helpers.d.html#L28" title="mysql.protocol.packet_helpers.toTimeDiff">toTimeDiff</a>(<span class="type">string</span> <span class="hid">s</span>)
 <a class="br" href="#L59" id="L59">59 </a>{
-<a class="br" href="#L60" id="L60">60 </a>	<a class="hid" href="mysql.types.d.html#L11" title="mysql.types.TimeDiff">TimeDiff</a> <span class="hid">td</span>;
+<a class="br" href="#L60" id="L60">60 </a>	<span class="hid">TimeDiff</span> <span class="hid">td</span>;
 <a class="br" href="#L61" id="L61">61 </a>	<span class="type">int</span> <span class="hid">t</span> = <span class="hid">parse</span>!<span class="type">int</span>(<span class="hid">s</span>);
 <a class="br" href="#L62" id="L62">62 </a>	<span class="kwrd">if</span> (<span class="hid">t</span> &lt; <span class="num">0</span>)
 <a class="br" href="#L63" id="L63">63 </a>	{
@@ -684,52 +684,52 @@
 <a class="br" href="#L656" id="L656">656 </a>		: <span class="hid">packet.consumeNonBinaryValueIfComplete</span>!<span class="hid">T</span>(<span class="hid">unsigned</span>);
 <a class="br" href="#L657" id="L657">657 </a>}
 <a class="br" href="#L658" id="L658">658 </a>
-<a class="br" href="#L659" id="L659">659 </a><span class="hid">SQLValue</span> <a class="hid" href="mysql.protocol.packet_helpers.d.html#L783" title="mysql.protocol.packet_helpers.consumeIfComplete">consumeIfComplete</a>()(<span class="kwrd">ref</span> <span class="type">ubyte</span>[] <span class="hid">packet</span>, <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType</a> <span class="hid">sqlType</span>, <span class="type">bool</span> <span class="hid">binary</span>, <span class="type">bool</span> <span class="hid">unsigned</span>, <span class="type">ushort</span> <span class="hid">charSet</span>)
+<a class="br" href="#L659" id="L659">659 </a><span class="hid">SQLValue</span> <a class="hid" href="mysql.protocol.packet_helpers.d.html#L783" title="mysql.protocol.packet_helpers.consumeIfComplete">consumeIfComplete</a>()(<span class="kwrd">ref</span> <span class="type">ubyte</span>[] <span class="hid">packet</span>, <span class="hid">SQLType</span> <span class="hid">sqlType</span>, <span class="type">bool</span> <span class="hid">binary</span>, <span class="type">bool</span> <span class="hid">unsigned</span>, <span class="type">ushort</span> <span class="hid">charSet</span>)
 <a class="br" href="#L660" id="L660">660 </a>{
 <a class="br" href="#L661" id="L661">661 </a>	<span class="kwrd">switch</span>(<span class="hid">sqlType</span>)
 <a class="br" href="#L662" id="L662">662 </a>	{
 <a class="br" href="#L663" id="L663">663 </a>		<span class="kwrd">default</span>: <span class="kwrd">assert</span>(<span class="kwrd">false</span>, <span class="str">&quot;Unsupported SQL type &quot;</span>~<span class="hid">to</span>!<span class="type">string</span>(<span class="hid">sqlType</span>));
-<a class="br" href="#L664" id="L664">664 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.NULL</a>:
+<a class="br" href="#L664" id="L664">664 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.NULL</span>:
 <a class="br" href="#L665" id="L665">665 </a>			<span class="hid">SQLValue</span> <span class="hid">result</span>;
 <a class="br" href="#L666" id="L666">666 </a>			<span class="hid">result.isIncomplete</span> = <span class="kwrd">false</span>;
 <a class="br" href="#L667" id="L667">667 </a>			<span class="hid">result.isNull</span> = <span class="kwrd">true</span>;
 <a class="br" href="#L668" id="L668">668 </a>			<span class="kwrd">return</span> <span class="hid">result</span>;
-<a class="br" href="#L669" id="L669">669 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.TINY</a>:
+<a class="br" href="#L669" id="L669">669 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.TINY</span>:
 <a class="br" href="#L670" id="L670">670 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="type">byte</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L671" id="L671">671 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.SHORT</a>:
+<a class="br" href="#L671" id="L671">671 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.SHORT</span>:
 <a class="br" href="#L672" id="L672">672 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="type">short</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L673" id="L673">673 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.INT24</a>:
+<a class="br" href="#L673" id="L673">673 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.INT24</span>:
 <a class="br" href="#L674" id="L674">674 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!(<span class="type">int</span>, <span class="num">3</span>)(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L675" id="L675">675 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.INT</a>:
+<a class="br" href="#L675" id="L675">675 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.INT</span>:
 <a class="br" href="#L676" id="L676">676 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="type">int</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L677" id="L677">677 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.LONGLONG</a>:
+<a class="br" href="#L677" id="L677">677 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.LONGLONG</span>:
 <a class="br" href="#L678" id="L678">678 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="type">long</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L679" id="L679">679 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.FLOAT</a>:
+<a class="br" href="#L679" id="L679">679 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.FLOAT</span>:
 <a class="br" href="#L680" id="L680">680 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="type">float</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L681" id="L681">681 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.DOUBLE</a>:
+<a class="br" href="#L681" id="L681">681 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.DOUBLE</span>:
 <a class="br" href="#L682" id="L682">682 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="type">double</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L683" id="L683">683 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.TIMESTAMP</a>:
+<a class="br" href="#L683" id="L683">683 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.TIMESTAMP</span>:
 <a class="br" href="#L684" id="L684">684 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="hid">DateTime</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L685" id="L685">685 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.TIME</a>:
+<a class="br" href="#L685" id="L685">685 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.TIME</span>:
 <a class="br" href="#L686" id="L686">686 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="hid">TimeOfDay</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L687" id="L687">687 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.YEAR</a>:
+<a class="br" href="#L687" id="L687">687 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.YEAR</span>:
 <a class="br" href="#L688" id="L688">688 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="type">ushort</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L689" id="L689">689 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.DATE</a>:
+<a class="br" href="#L689" id="L689">689 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.DATE</span>:
 <a class="br" href="#L690" id="L690">690 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="hid">Date</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L691" id="L691">691 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.DATETIME</a>:
+<a class="br" href="#L691" id="L691">691 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.DATETIME</span>:
 <a class="br" href="#L692" id="L692">692 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="hid">DateTime</span>(<span class="hid">binary</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L693" id="L693">693 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.VARCHAR</a>:
-<a class="br" href="#L694" id="L694">694 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.ENUM</a>:
-<a class="br" href="#L695" id="L695">695 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.SET</a>:
-<a class="br" href="#L696" id="L696">696 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.VARSTRING</a>:
-<a class="br" href="#L697" id="L697">697 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.STRING</a>:
-<a class="br" href="#L698" id="L698">698 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.NEWDECIMAL</a>:
+<a class="br" href="#L693" id="L693">693 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.VARCHAR</span>:
+<a class="br" href="#L694" id="L694">694 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.ENUM</span>:
+<a class="br" href="#L695" id="L695">695 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.SET</span>:
+<a class="br" href="#L696" id="L696">696 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.VARSTRING</span>:
+<a class="br" href="#L697" id="L697">697 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.STRING</span>:
+<a class="br" href="#L698" id="L698">698 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.NEWDECIMAL</span>:
 <a class="br" href="#L699" id="L699">699 </a>			<span class="kwrd">return</span> <span class="hid">packet.consumeIfComplete</span>!<span class="type">string</span>(<span class="kwrd">false</span>, <span class="hid">unsigned</span>);
-<a class="br" href="#L700" id="L700">700 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.TINYBLOB</a>:
-<a class="br" href="#L701" id="L701">701 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.MEDIUMBLOB</a>:
-<a class="br" href="#L702" id="L702">702 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.BLOB</a>:
-<a class="br" href="#L703" id="L703">703 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.LONGBLOB</a>:
-<a class="br" href="#L704" id="L704">704 </a>		<span class="kwrd">case</span> <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.BIT</a>:  <span class="com">// Yes, BIT. See note below.</span>
+<a class="br" href="#L700" id="L700">700 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.TINYBLOB</span>:
+<a class="br" href="#L701" id="L701">701 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.MEDIUMBLOB</span>:
+<a class="br" href="#L702" id="L702">702 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.BLOB</span>:
+<a class="br" href="#L703" id="L703">703 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.LONGBLOB</span>:
+<a class="br" href="#L704" id="L704">704 </a>		<span class="kwrd">case</span> <span class="hid">SQLType.BIT</span>:  <span class="com">// Yes, BIT. See note below.</span>
 <a class="br" href="#L705" id="L705">705 </a>
 <a class="br" href="#L706" id="L706">706 </a>			<span class="com">// TODO: This line should work. Why doesn't it?</span>
 <a class="br" href="#L707" id="L707">707 </a>			<span class="com">//return packet.consumeIfComplete!(ubyte[])(binary, unsigned);</span>
@@ -758,7 +758,7 @@
 <a class="br" href="#L730" id="L730">730 </a>			<span class="com">// Type BIT is treated as a length coded binary (like a BLOB or VARCHAR),</span>
 <a class="br" href="#L731" id="L731">731 </a>			<span class="com">// not like an integral type. So convert the binary data to a bool.</span>
 <a class="br" href="#L732" id="L732">732 </a>			<span class="com">// See: http://dev.mysql.com/doc/internals/en/binary-protocol-value.html</span>
-<a class="br" href="#L733" id="L733">733 </a>			<span class="kwrd">if</span>(<span class="hid">sqlType</span> == <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.BIT</a>)
+<a class="br" href="#L733" id="L733">733 </a>			<span class="kwrd">if</span>(<span class="hid">sqlType</span> == <span class="hid">SQLType.BIT</span>)
 <a class="br" href="#L734" id="L734">734 </a>			{
 <a class="br" href="#L735" id="L735">735 </a>				<span class="hid">enforce</span>!<span class="hid">MYXProtocol</span>(<span class="hid">result.value.length</span> == <span class="num">1</span>,
 <a class="br" href="#L736" id="L736">736 </a>					<span class="str">&quot;Expected BIT to arrive as an LCB with length 1, but got length &quot;</span>~<span class="hid">to</span>!<span class="type">string</span>(<span class="hid">result.value.length</span>));

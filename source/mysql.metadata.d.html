@@ -134,7 +134,7 @@
 <a class="br" href="#L106" id="L106">106 </a>
 <a class="br" href="#L107" id="L107">107 </a>	<a class="hid" href="mysql.metadata.d.html#L79" title="mysql.metadata.MySQLProcedure">MySQLProcedure</a>[] <span class="hid">stored</span>(<span class="type">bool</span> <span class="hid">procs</span>)
 <a class="br" href="#L108" id="L108">108 </a>	{
-<a class="br" href="#L109" id="L109">109 </a>		<span class="hid">enforce</span>!<span class="hid">MYX</span>(<span class="hid">_con.currentDB.length</span>, <span class="str">&quot;There is no selected database&quot;</span>);
+<a class="br" href="#L109" id="L109">109 </a>		<span class="hid">enforce</span>!<a class="hid" href="mysql.exceptions.d.html#L10" title="mysql.exceptions.MYX">MYX</a>(<span class="hid">_con.currentDB.length</span>, <span class="str">&quot;There is no selected database&quot;</span>);
 <a class="br" href="#L110" id="L110">110 </a>		<span class="type">string</span> <a class="hid" href="mysql.commands.d.html#L224" title="mysql.commands.query">query</a> = <span class="hid">procs</span> ? <span class="str">&quot;SHOW PROCEDURE STATUS WHERE db='&quot;</span>: <span class="str">&quot;SHOW FUNCTION STATUS WHERE db='&quot;</span>;
 <a class="br" href="#L111" id="L111">111 </a>		<a class="hid" href="mysql.commands.d.html#L224" title="mysql.commands.query">query</a> ~= <span class="hid">_con.currentDB</span> ~ <span class="str">&quot;'&quot;</span>;
 <a class="br" href="#L112" id="L112">112 </a>

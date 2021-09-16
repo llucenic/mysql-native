@@ -57,7 +57,7 @@
 <a class="br" href="#L29" id="L29">29 </a>	<span class="kwrd">import</span> <span class="hid">mysql.protocol.constants</span>;
 <a class="br" href="#L30" id="L30">30 </a>	
 <a class="br" href="#L31" id="L31">31 </a>	<span class="hid">size_t</span> <span class="hid">pIndex</span>;    <span class="com">//parameter number 0 - number of params-1</span>
-<a class="br" href="#L32" id="L32">32 </a>	<span class="hid">SQLType</span> <span class="hid">type</span> = <span class="hid">SQLType.INFER_FROM_D_TYPE</span>;
+<a class="br" href="#L32" id="L32">32 </a>	<a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType</a> <span class="hid">type</span> = <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.INFER_FROM_D_TYPE</a>;
 <a class="br" href="#L33" id="L33">33 </a>	<span class="type">uint</span> <span class="hid">chunkSize</span>; <span class="com">/// In bytes</span>
 <a class="br" href="#L34" id="L34">34 </a>	<span class="type">uint</span> <span class="kwrd">delegate</span>(<span class="type">ubyte</span>[]) <span class="hid">chunkDelegate</span>;
 <a class="br" href="#L35" id="L35">35 </a>}
@@ -84,15 +84,15 @@
 <a class="br" href="#L56" id="L56">56 </a>
 <a class="br" href="#L57" id="L57">57 </a><span class="kwrd">package</span>:
 <a class="br" href="#L58" id="L58">58 </a>	<span class="type">ushort</span> <span class="hid">_numParams</span>; <span class="com">/// Number of parameters this prepared statement takes</span>
-<a class="br" href="#L59" id="L59">59 </a>	<span class="hid">PreparedStmtHeaders</span> <span class="hid">_headers</span>;
+<a class="br" href="#L59" id="L59">59 </a>	<a class="hid" href="mysql.protocol.packets.d.html#L400" title="mysql.protocol.packets.PreparedStmtHeaders">PreparedStmtHeaders</a> <span class="hid">_headers</span>;
 <a class="br" href="#L60" id="L60">60 </a>	<span class="hid">Variant</span>[] <span class="hid">_inParams</span>;
 <a class="br" href="#L61" id="L61">61 </a>	<a class="hid" href="mysql.prepared.d.html#L27" title="mysql.prepared.ParameterSpecialization">ParameterSpecialization</a>[] <span class="hid">_psa</span>;
 <a class="br" href="#L62" id="L62">62 </a>	<a class="hid" href="mysql.commands.d.html#L44" title="mysql.commands.ColumnSpecialization">ColumnSpecialization</a>[] <span class="hid">_columnSpecials</span>;
 <a class="br" href="#L63" id="L63">63 </a>	<span class="type">ulong</span> <span class="hid">_lastInsertID</span>;
 <a class="br" href="#L64" id="L64">64 </a>
-<a class="br" href="#L65" id="L65">65 </a>	<span class="hid">ExecQueryImplInfo</span> <span class="hid">getExecQueryImplInfo</span>(<span class="type">uint</span> <span class="hid">statementId</span>)
+<a class="br" href="#L65" id="L65">65 </a>	<a class="hid" href="mysql.protocol.comms.d.html#L484" title="mysql.protocol.comms.ExecQueryImplInfo">ExecQueryImplInfo</a> <span class="hid">getExecQueryImplInfo</span>(<span class="type">uint</span> <span class="hid">statementId</span>)
 <a class="br" href="#L66" id="L66">66 </a>	{
-<a class="br" href="#L67" id="L67">67 </a>		<span class="kwrd">return</span> <span class="hid">ExecQueryImplInfo</span>(<span class="kwrd">true</span>, <span class="kwrd">null</span>, <span class="hid">statementId</span>, <span class="hid">_headers</span>, <span class="hid">_inParams</span>, <span class="hid">_psa</span>);
+<a class="br" href="#L67" id="L67">67 </a>		<span class="kwrd">return</span> <a class="hid" href="mysql.protocol.comms.d.html#L484" title="mysql.protocol.comms.ExecQueryImplInfo">ExecQueryImplInfo</a>(<span class="kwrd">true</span>, <span class="kwrd">null</span>, <span class="hid">statementId</span>, <span class="hid">_headers</span>, <span class="hid">_inParams</span>, <span class="hid">_psa</span>);
 <a class="br" href="#L68" id="L68">68 </a>	}
 <a class="br" href="#L69" id="L69">69 </a>	
 <a class="br" href="#L70" id="L70">70 </a><span class="kwrd">public</span>:
@@ -113,7 +113,7 @@
 <a class="br" href="#L85" id="L85">85 </a>	including parameter descriptions, and result set field descriptions,
 <a class="br" href="#L86" id="L86">86 </a>	followed by an EOF packet.
 <a class="br" href="#L87" id="L87">87 </a>	+/</span>
-<a class="br" href="#L88" id="L88">88 </a>	<span class="kwrd">this</span>(<span class="kwrd">const</span>(<span class="type">char</span>[]) <span class="hid">sql</span>, <span class="hid">PreparedStmtHeaders</span> <span class="hid">headers</span>, <span class="type">ushort</span> <span class="hid">numParams</span>)
+<a class="br" href="#L88" id="L88">88 </a>	<span class="kwrd">this</span>(<span class="kwrd">const</span>(<span class="type">char</span>[]) <span class="hid">sql</span>, <a class="hid" href="mysql.protocol.packets.d.html#L400" title="mysql.protocol.packets.PreparedStmtHeaders">PreparedStmtHeaders</a> <span class="hid">headers</span>, <span class="type">ushort</span> <span class="hid">numParams</span>)
 <a class="br" href="#L89" id="L89">89 </a>	{
 <a class="br" href="#L90" id="L90">90 </a>		<span class="kwrd">this</span>.<span class="hid">_sql</span>        = <span class="hid">sql</span>;
 <a class="br" href="#L91" id="L91">91 </a>		<span class="kwrd">this</span>.<span class="hid">_headers</span>    = <span class="hid">headers</span>;
@@ -143,7 +143,7 @@
 <a class="br" href="#L115" id="L115">115 </a>
 <a class="br" href="#L116" id="L116">116 </a>	Params: index = The zero based index
 <a class="br" href="#L117" id="L117">117 </a>	+/</span>
-<a class="br" href="#L118" id="L118">118 </a>	<span class="type">void</span> <span class="hid">setArg</span>(<span class="hid">T</span>)(<span class="hid">size_t</span> <span class="hid">index</span>, <span class="hid">T</span> <span class="hid">val</span>, <a class="hid" href="mysql.prepared.d.html#L27" title="mysql.prepared.ParameterSpecialization">ParameterSpecialization</a> <span class="hid">psn</span> = <a class="hid" href="mysql.prepared.d.html#L37" title="mysql.prepared.PSN">PSN</a>(<span class="num">0</span>, <span class="hid">SQLType.INFER_FROM_D_TYPE</span>, <span class="num">0</span>, <span class="kwrd">null</span>))
+<a class="br" href="#L118" id="L118">118 </a>	<span class="type">void</span> <span class="hid">setArg</span>(<span class="hid">T</span>)(<span class="hid">size_t</span> <span class="hid">index</span>, <span class="hid">T</span> <span class="hid">val</span>, <a class="hid" href="mysql.prepared.d.html#L27" title="mysql.prepared.ParameterSpecialization">ParameterSpecialization</a> <span class="hid">psn</span> = <a class="hid" href="mysql.prepared.d.html#L37" title="mysql.prepared.PSN">PSN</a>(<span class="num">0</span>, <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.INFER_FROM_D_TYPE</a>, <span class="num">0</span>, <span class="kwrd">null</span>))
 <a class="br" href="#L119" id="L119">119 </a>		<span class="kwrd">if</span>(!<span class="hid">isInstanceOf</span>!(<span class="hid">Nullable</span>, <span class="hid">T</span>))
 <a class="br" href="#L120" id="L120">120 </a>	{
 <a class="br" href="#L121" id="L121">121 </a>		<span class="com">// Now in theory we should be able to check the parameter type here, since the</span>
@@ -162,7 +162,7 @@
 <a class="br" href="#L134" id="L134">134 </a>	}
 <a class="br" href="#L135" id="L135">135 </a>
 <a class="br" href="#L136" id="L136">136 </a>	<span class="com">///ditto</span>
-<a class="br" href="#L137" id="L137">137 </a>	<span class="type">void</span> <span class="hid">setArg</span>(<span class="hid">T</span>)(<span class="hid">size_t</span> <span class="hid">index</span>, <span class="hid">Nullable</span>!<span class="hid">T</span> <span class="hid">val</span>, <a class="hid" href="mysql.prepared.d.html#L27" title="mysql.prepared.ParameterSpecialization">ParameterSpecialization</a> <span class="hid">psn</span> = <a class="hid" href="mysql.prepared.d.html#L37" title="mysql.prepared.PSN">PSN</a>(<span class="num">0</span>, <span class="hid">SQLType.INFER_FROM_D_TYPE</span>, <span class="num">0</span>, <span class="kwrd">null</span>))
+<a class="br" href="#L137" id="L137">137 </a>	<span class="type">void</span> <span class="hid">setArg</span>(<span class="hid">T</span>)(<span class="hid">size_t</span> <span class="hid">index</span>, <span class="hid">Nullable</span>!<span class="hid">T</span> <span class="hid">val</span>, <a class="hid" href="mysql.prepared.d.html#L27" title="mysql.prepared.ParameterSpecialization">ParameterSpecialization</a> <span class="hid">psn</span> = <a class="hid" href="mysql.prepared.d.html#L37" title="mysql.prepared.PSN">PSN</a>(<span class="num">0</span>, <a class="hid" href="mysql.protocol.constants.d.html#L39" title="mysql.protocol.constants.SQLType">SQLType.INFER_FROM_D_TYPE</a>, <span class="num">0</span>, <span class="kwrd">null</span>))
 <a class="br" href="#L138" id="L138">138 </a>	{
 <a class="br" href="#L139" id="L139">139 </a>		<span class="kwrd">if</span>(<span class="hid">val.isNull</span>)
 <a class="br" href="#L140" id="L140">140 </a>			<span class="hid">setArg</span>(<span class="hid">index</span>, <span class="kwrd">null</span>, <span class="hid">psn</span>);
@@ -277,10 +277,10 @@
 <a class="br" href="#L249" id="L249">249 </a>	@<span class="hid">property</span> <span class="type">ulong</span> <span class="hid">lastInsertID</span>() <span class="kwrd">pure</span> <span class="kwrd">const</span> <span class="kwrd">nothrow</span> { <span class="kwrd">return</span> <span class="hid">_lastInsertID</span>; }
 <a class="br" href="#L250" id="L250">250 </a>
 <a class="br" href="#L251" id="L251">251 </a>	<span class="com">/// Gets the prepared header's field descriptions.</span>
-<a class="br" href="#L252" id="L252">252 </a>	@<span class="hid">property</span> <span class="hid">FieldDescription</span>[] <span class="hid">preparedFieldDescriptions</span>() <span class="kwrd">pure</span> { <span class="kwrd">return</span> <span class="hid">_headers.fieldDescriptions</span>; }
+<a class="br" href="#L252" id="L252">252 </a>	@<span class="hid">property</span> <a class="hid" href="mysql.protocol.packets.d.html#L94" title="mysql.protocol.packets.FieldDescription">FieldDescription</a>[] <span class="hid">preparedFieldDescriptions</span>() <span class="kwrd">pure</span> { <span class="kwrd">return</span> <span class="hid">_headers.fieldDescriptions</span>; }
 <a class="br" href="#L253" id="L253">253 </a>
 <a class="br" href="#L254" id="L254">254 </a>	<span class="com">/// Gets the prepared header's param descriptions.</span>
-<a class="br" href="#L255" id="L255">255 </a>	@<span class="hid">property</span> <span class="hid">ParamDescription</span>[] <span class="hid">preparedParamDescriptions</span>() <span class="kwrd">pure</span> { <span class="kwrd">return</span> <span class="hid">_headers.paramDescriptions</span>; }
+<a class="br" href="#L255" id="L255">255 </a>	@<span class="hid">property</span> <a class="hid" href="mysql.protocol.packets.d.html#L218" title="mysql.protocol.packets.ParamDescription">ParamDescription</a>[] <span class="hid">preparedParamDescriptions</span>() <span class="kwrd">pure</span> { <span class="kwrd">return</span> <span class="hid">_headers.paramDescriptions</span>; }
 <a class="br" href="#L256" id="L256">256 </a>
 <a class="br" href="#L257" id="L257">257 </a>	<span class="com">/// Get/set the column specializations.</span>
 <a class="br" href="#L258" id="L258">258 </a>	@<span class="hid">property</span> <a class="hid" href="mysql.commands.d.html#L44" title="mysql.commands.ColumnSpecialization">ColumnSpecialization</a>[] <span class="hid">columnSpecials</span>() <span class="kwrd">pure</span> { <span class="kwrd">return</span> <span class="hid">_columnSpecials</span>; }

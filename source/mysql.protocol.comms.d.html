@@ -109,7 +109,7 @@
 <a class="br" href="#L81" id="L81">81 </a>		<span class="kwrd">return</span> <span class="hid">prefix</span>;
 <a class="br" href="#L82" id="L82">82 </a>	}
 <a class="br" href="#L83" id="L83">83 </a>
-<a class="br" href="#L84" id="L84">84 </a>	<span class="kwrd">static</span> <span class="type">ubyte</span>[] <span class="hid">analyseParams</span>(<span class="hid">Variant</span>[] <span class="hid">inParams</span>, <a class="hid" href="mysql.prepared.d.html#L27" title="mysql.prepared.ParameterSpecialization">ParameterSpecialization</a>[] <span class="hid">psa</span>,
+<a class="br" href="#L84" id="L84">84 </a>	<span class="kwrd">static</span> <span class="type">ubyte</span>[] <span class="hid">analyseParams</span>(<span class="hid">Variant</span>[] <span class="hid">inParams</span>, <span class="hid">ParameterSpecialization</span>[] <span class="hid">psa</span>,
 <a class="br" href="#L85" id="L85">85 </a>		<span class="kwrd">out</span> <span class="type">ubyte</span>[] <span class="hid">vals</span>, <span class="kwrd">out</span> <span class="type">bool</span> <span class="hid">longData</span>)
 <a class="br" href="#L86" id="L86">86 </a>	{
 <a class="br" href="#L87" id="L87">87 </a>		<span class="hid">size_t</span> <span class="hid">pc</span> = <span class="hid">inParams.length</span>;
@@ -441,10 +441,10 @@
 <a class="br" href="#L413" id="L413">413 </a>		<span class="kwrd">return</span> <span class="hid">types</span>;
 <a class="br" href="#L414" id="L414">414 </a>	}
 <a class="br" href="#L415" id="L415">415 </a>
-<a class="br" href="#L416" id="L416">416 </a>	<span class="kwrd">static</span> <span class="type">void</span> <span class="hid">sendLongData</span>(<span class="hid">MySQLSocket</span> <span class="hid">socket</span>, <span class="type">uint</span> <span class="hid">hStmt</span>, <a class="hid" href="mysql.prepared.d.html#L27" title="mysql.prepared.ParameterSpecialization">ParameterSpecialization</a>[] <span class="hid">psa</span>)
+<a class="br" href="#L416" id="L416">416 </a>	<span class="kwrd">static</span> <span class="type">void</span> <span class="hid">sendLongData</span>(<span class="hid">MySQLSocket</span> <span class="hid">socket</span>, <span class="type">uint</span> <span class="hid">hStmt</span>, <span class="hid">ParameterSpecialization</span>[] <span class="hid">psa</span>)
 <a class="br" href="#L417" id="L417">417 </a>	{
 <a class="br" href="#L418" id="L418">418 </a>		<span class="kwrd">assert</span>(<span class="hid">psa.length</span> &lt;= <span class="type">ushort</span>.<span class="hid">max</span>); <span class="com">// parameter number is sent as short</span>
-<a class="br" href="#L419" id="L419">419 </a>		<span class="kwrd">foreach</span> (<span class="hid">size_t</span> <span class="hid">i</span>, <a class="hid" href="mysql.prepared.d.html#L37" title="mysql.prepared.PSN">PSN</a> <span class="hid">psn</span>; <span class="hid">psa</span>)
+<a class="br" href="#L419" id="L419">419 </a>		<span class="kwrd">foreach</span> (<span class="hid">size_t</span> <span class="hid">i</span>, <span class="hid">PSN</span> <span class="hid">psn</span>; <span class="hid">psa</span>)
 <a class="br" href="#L420" id="L420">420 </a>		{
 <a class="br" href="#L421" id="L421">421 </a>			<span class="kwrd">if</span> (!<span class="hid">psn.chunkSize</span>) <span class="kwrd">continue</span>;
 <a class="br" href="#L422" id="L422">422 </a>			<span class="type">uint</span> <span class="hid">cs</span> = <span class="hid">psn.chunkSize</span>;
@@ -477,7 +477,7 @@
 <a class="br" href="#L449" id="L449">449 </a>	}
 <a class="br" href="#L450" id="L450">450 </a>
 <a class="br" href="#L451" id="L451">451 </a>	<span class="kwrd">static</span> <span class="type">void</span> <span class="hid">sendCommand</span>(<span class="hid">Connection</span> <span class="hid">conn</span>, <span class="type">uint</span> <span class="hid">hStmt</span>, <span class="hid">PreparedStmtHeaders</span> <span class="hid">psh</span>,
-<a class="br" href="#L452" id="L452">452 </a>		<span class="hid">Variant</span>[] <span class="hid">inParams</span>, <a class="hid" href="mysql.prepared.d.html#L27" title="mysql.prepared.ParameterSpecialization">ParameterSpecialization</a>[] <span class="hid">psa</span>)
+<a class="br" href="#L452" id="L452">452 </a>		<span class="hid">Variant</span>[] <span class="hid">inParams</span>, <span class="hid">ParameterSpecialization</span>[] <span class="hid">psa</span>)
 <a class="br" href="#L453" id="L453">453 </a>	{
 <a class="br" href="#L454" id="L454">454 </a>		<span class="hid">conn.autoPurge</span>();
 <a class="br" href="#L455" id="L455">455 </a>
@@ -520,7 +520,7 @@
 <a class="br" href="#L492" id="L492">492 </a>	<span class="type">uint</span> <span class="hid">hStmt</span>;
 <a class="br" href="#L493" id="L493">493 </a>	<span class="hid">PreparedStmtHeaders</span> <span class="hid">psh</span>;
 <a class="br" href="#L494" id="L494">494 </a>	<span class="hid">Variant</span>[] <span class="hid">inParams</span>;
-<a class="br" href="#L495" id="L495">495 </a>	<a class="hid" href="mysql.prepared.d.html#L27" title="mysql.prepared.ParameterSpecialization">ParameterSpecialization</a>[] <span class="hid">psa</span>;
+<a class="br" href="#L495" id="L495">495 </a>	<span class="hid">ParameterSpecialization</span>[] <span class="hid">psa</span>;
 <a class="br" href="#L496" id="L496">496 </a>}
 <a class="br" href="#L497" id="L497">497 </a>
 <a class="br" href="#L498" id="L498">498 </a><span class="com">/++

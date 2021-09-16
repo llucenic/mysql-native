@@ -80,10 +80,10 @@
 <a class="br" href="#L52" id="L52">52 </a>
 <a class="br" href="#L53" id="L53">53 </a>Throws: `mysql.exceptions.MYX` if the server has a problem.
 <a class="br" href="#L54" id="L54">54 </a>+/</span>
-<a class="br" href="#L55" id="L55">55 </a><a class="hid" href="mysql.prepared.d.html#L52" title="mysql.prepared.Prepared">Prepared</a> <a class="hid" href="mysql.connection.d.html#L55" title="mysql.connection.prepare">prepare</a>(<a class="hid" href="mysql.connection.d.html#L301" title="mysql.connection.Connection">Connection</a> <span class="hid">conn</span>, <span class="kwrd">const</span>(<span class="type">char</span>[]) <span class="hid">sql</span>)
+<a class="br" href="#L55" id="L55">55 </a><span class="hid">Prepared</span> <a class="hid" href="mysql.connection.d.html#L55" title="mysql.connection.prepare">prepare</a>(<a class="hid" href="mysql.connection.d.html#L301" title="mysql.connection.Connection">Connection</a> <span class="hid">conn</span>, <span class="kwrd">const</span>(<span class="type">char</span>[]) <span class="hid">sql</span>)
 <a class="br" href="#L56" id="L56">56 </a>{
 <a class="br" href="#L57" id="L57">57 </a>	<span class="kwrd">auto</span> <span class="hid">info</span> = <span class="hid">conn.registerIfNeeded</span>(<span class="hid">sql</span>);
-<a class="br" href="#L58" id="L58">58 </a>	<span class="kwrd">return</span> <a class="hid" href="mysql.prepared.d.html#L52" title="mysql.prepared.Prepared">Prepared</a>(<span class="hid">sql</span>, <span class="hid">info.headers</span>, <span class="hid">info.numParams</span>);
+<a class="br" href="#L58" id="L58">58 </a>	<span class="kwrd">return</span> <span class="hid">Prepared</span>(<span class="hid">sql</span>, <span class="hid">info.headers</span>, <span class="hid">info.numParams</span>);
 <a class="br" href="#L59" id="L59">59 </a>}
 <a class="br" href="#L60" id="L60">60 </a>
 <a class="br" href="#L61" id="L61">61 </a><span class="com">/++
@@ -115,7 +115,7 @@
 <a class="br" href="#L87" id="L87">87 </a>	name = The name of the stored function.
 <a class="br" href="#L88" id="L88">88 </a>	numArgs = The number of arguments the stored procedure takes.
 <a class="br" href="#L89" id="L89">89 </a>+/</span>
-<a class="br" href="#L90" id="L90">90 </a><a class="hid" href="mysql.prepared.d.html#L52" title="mysql.prepared.Prepared">Prepared</a> <a class="hid" href="mysql.connection.d.html#L90" title="mysql.connection.prepareFunction">prepareFunction</a>(<a class="hid" href="mysql.connection.d.html#L301" title="mysql.connection.Connection">Connection</a> <span class="hid">conn</span>, <span class="type">string</span> <span class="hid">name</span>, <span class="type">int</span> <span class="hid">numArgs</span>)
+<a class="br" href="#L90" id="L90">90 </a><span class="hid">Prepared</span> <a class="hid" href="mysql.connection.d.html#L90" title="mysql.connection.prepareFunction">prepareFunction</a>(<a class="hid" href="mysql.connection.d.html#L301" title="mysql.connection.Connection">Connection</a> <span class="hid">conn</span>, <span class="type">string</span> <span class="hid">name</span>, <span class="type">int</span> <span class="hid">numArgs</span>)
 <a class="br" href="#L91" id="L91">91 </a>{
 <a class="br" href="#L92" id="L92">92 </a>	<span class="kwrd">auto</span> <span class="hid">sql</span> = <span class="str">&quot;select &quot;</span> ~ <span class="hid">name</span> ~ <a class="hid" href="mysql.connection.d.html#L118" title="mysql.connection.preparedPlaceholderArgs">preparedPlaceholderArgs</a>(<span class="hid">numArgs</span>);
 <a class="br" href="#L93" id="L93">93 </a>	<span class="kwrd">return</span> <a class="hid" href="mysql.connection.d.html#L55" title="mysql.connection.prepare">prepare</a>(<span class="hid">conn</span>, <span class="hid">sql</span>);
@@ -137,7 +137,7 @@
 <a class="br" href="#L109" id="L109">109 </a>	numArgs = The number of arguments the stored procedure takes.
 <a class="br" href="#L110" id="L110">110 </a>
 <a class="br" href="#L111" id="L111">111 </a>+/</span>
-<a class="br" href="#L112" id="L112">112 </a><a class="hid" href="mysql.prepared.d.html#L52" title="mysql.prepared.Prepared">Prepared</a> <a class="hid" href="mysql.connection.d.html#L112" title="mysql.connection.prepareProcedure">prepareProcedure</a>(<a class="hid" href="mysql.connection.d.html#L301" title="mysql.connection.Connection">Connection</a> <span class="hid">conn</span>, <span class="type">string</span> <span class="hid">name</span>, <span class="type">int</span> <span class="hid">numArgs</span>)
+<a class="br" href="#L112" id="L112">112 </a><span class="hid">Prepared</span> <a class="hid" href="mysql.connection.d.html#L112" title="mysql.connection.prepareProcedure">prepareProcedure</a>(<a class="hid" href="mysql.connection.d.html#L301" title="mysql.connection.Connection">Connection</a> <span class="hid">conn</span>, <span class="type">string</span> <span class="hid">name</span>, <span class="type">int</span> <span class="hid">numArgs</span>)
 <a class="br" href="#L113" id="L113">113 </a>{
 <a class="br" href="#L114" id="L114">114 </a>	<span class="kwrd">auto</span> <span class="hid">sql</span> = <span class="str">&quot;call &quot;</span> ~ <span class="hid">name</span> ~ <a class="hid" href="mysql.connection.d.html#L118" title="mysql.connection.preparedPlaceholderArgs">preparedPlaceholderArgs</a>(<span class="hid">numArgs</span>);
 <a class="br" href="#L115" id="L115">115 </a>	<span class="kwrd">return</span> <a class="hid" href="mysql.connection.d.html#L55" title="mysql.connection.prepare">prepare</a>(<span class="hid">conn</span>, <span class="hid">sql</span>);
@@ -258,10 +258,10 @@
 <a class="br" href="#L230" id="L230">230 </a>	<span class="kwrd">import</span> <span class="hid">std.variant</span>;
 <a class="br" href="#L231" id="L231">231 </a>
 <a class="br" href="#L232" id="L232">232 </a>	<span class="kwrd">private</span> <a class="hid" href="mysql.connection.d.html#L301" title="mysql.connection.Connection">Connection</a> <span class="hid">_conn</span>;
-<a class="br" href="#L233" id="L233">233 </a>	<a class="hid" href="mysql.prepared.d.html#L52" title="mysql.prepared.Prepared">Prepared</a> <span class="hid">_prepared</span>;
+<a class="br" href="#L233" id="L233">233 </a>	<span class="hid">Prepared</span> <span class="hid">_prepared</span>;
 <a class="br" href="#L234" id="L234">234 </a>
 <a class="br" href="#L235" id="L235">235 </a>	<span class="com">/// Access underlying `Prepared`</span>
-<a class="br" href="#L236" id="L236">236 </a>	@<span class="hid">property</span> <a class="hid" href="mysql.prepared.d.html#L52" title="mysql.prepared.Prepared">Prepared</a> <span class="hid">prepared</span>() { <span class="kwrd">return</span> <span class="hid">_prepared</span>; }
+<a class="br" href="#L236" id="L236">236 </a>	@<span class="hid">property</span> <span class="hid">Prepared</span> <span class="hid">prepared</span>() { <span class="kwrd">return</span> <span class="hid">_prepared</span>; }
 <a class="br" href="#L237" id="L237">237 </a>
 <a class="br" href="#L238" id="L238">238 </a>	<span class="kwrd">alias</span> <span class="hid">_prepared</span> <span class="kwrd">this</span>;
 <a class="br" href="#L239" id="L239">239 </a>
@@ -522,7 +522,7 @@
 <a class="br" href="#L494" id="L494">494 </a>	}
 <a class="br" href="#L495" id="L495">495 </a>
 <a class="br" href="#L496" id="L496">496 </a>	<span class="com">/// Lookup per-connection prepared statement info by SQL</span>
-<a class="br" href="#L497" id="L497">497 </a>	<span class="kwrd">private</span> <a class="hid" href="mysql.prepared.d.html#L305" title="mysql.prepared.PreparedRegistrations">PreparedRegistrations</a>!<a class="hid" href="mysql.connection.d.html#L148" title="mysql.connection.PreparedServerInfo">PreparedServerInfo</a> <span class="hid">preparedRegistrations</span>;
+<a class="br" href="#L497" id="L497">497 </a>	<span class="kwrd">private</span> <span class="hid">PreparedRegistrations</span>!<a class="hid" href="mysql.connection.d.html#L148" title="mysql.connection.PreparedServerInfo">PreparedServerInfo</a> <span class="hid">preparedRegistrations</span>;
 <a class="br" href="#L498" id="L498">498 </a>
 <a class="br" href="#L499" id="L499">499 </a>	<span class="com">/// Releases all prepared statements that are queued for release.</span>
 <a class="br" href="#L500" id="L500">500 </a>	<span class="type">void</span> <span class="hid">releaseQueued</span>()
@@ -954,7 +954,7 @@
 <a class="br" href="#L926" id="L926">926 </a>	This is provided for those who prefer eager registration over lazy
 <a class="br" href="#L927" id="L927">927 </a>	for performance reasons.
 <a class="br" href="#L928" id="L928">928 </a>	+/</span>
-<a class="br" href="#L929" id="L929">929 </a>	<span class="type">void</span> <span class="hid">register</span>(<a class="hid" href="mysql.prepared.d.html#L52" title="mysql.prepared.Prepared">Prepared</a> <span class="hid">prepared</span>)
+<a class="br" href="#L929" id="L929">929 </a>	<span class="type">void</span> <span class="hid">register</span>(<span class="hid">Prepared</span> <span class="hid">prepared</span>)
 <a class="br" href="#L930" id="L930">930 </a>	{
 <a class="br" href="#L931" id="L931">931 </a>		<span class="hid">register</span>(<span class="hid">prepared.sql</span>);
 <a class="br" href="#L932" id="L932">932 </a>	}
@@ -1004,7 +1004,7 @@
 <a class="br" href="#L976" id="L976">976 </a>	would create ugly situations where hidden, implicit behavior triggers
 <a class="br" href="#L977" id="L977">977 </a>	an unexpected auto-purge.
 <a class="br" href="#L978" id="L978">978 </a>	+/</span>
-<a class="br" href="#L979" id="L979">979 </a>	<span class="type">void</span> <span class="hid">release</span>(<a class="hid" href="mysql.prepared.d.html#L52" title="mysql.prepared.Prepared">Prepared</a> <span class="hid">prepared</span>)
+<a class="br" href="#L979" id="L979">979 </a>	<span class="type">void</span> <span class="hid">release</span>(<span class="hid">Prepared</span> <span class="hid">prepared</span>)
 <a class="br" href="#L980" id="L980">980 </a>	{
 <a class="br" href="#L981" id="L981">981 </a>		<span class="hid">release</span>(<span class="hid">prepared.sql</span>);
 <a class="br" href="#L982" id="L982">982 </a>	}
@@ -1065,7 +1065,7 @@
 <a class="br" href="#L1037" id="L1037">1037 </a>	}
 <a class="br" href="#L1038" id="L1038">1038 </a>
 <a class="br" href="#L1039" id="L1039">1039 </a>	<span class="com">/// Is the given statement registered on this connection as a prepared statement?</span>
-<a class="br" href="#L1040" id="L1040">1040 </a>	<span class="type">bool</span> <span class="hid">isRegistered</span>(<a class="hid" href="mysql.prepared.d.html#L52" title="mysql.prepared.Prepared">Prepared</a> <span class="hid">prepared</span>)
+<a class="br" href="#L1040" id="L1040">1040 </a>	<span class="type">bool</span> <span class="hid">isRegistered</span>(<span class="hid">Prepared</span> <span class="hid">prepared</span>)
 <a class="br" href="#L1041" id="L1041">1041 </a>	{
 <a class="br" href="#L1042" id="L1042">1042 </a>		<span class="kwrd">return</span> <span class="hid">isRegistered</span>( <span class="hid">prepared.sql</span> );
 <a class="br" href="#L1043" id="L1043">1043 </a>	}
