@@ -77,7 +77,7 @@ var symbols = [
 {name: 'mysql.impl.prepared.UnsafePrepared.numArgs', kind: "functiondeclaration", path: './mysql/impl/prepared/UnsafePrepared.numArgs.html', attributes: ["pure", "nothrow", "property", "safe", "const"]},
 {name: 'mysql.impl.prepared.UnsafePrepared.preparedFieldDescriptions', kind: "functiondeclaration", path: './mysql/impl/prepared/UnsafePrepared.preparedFieldDescriptions.html', attributes: ["pure", "property", "safe"]},
 {name: 'mysql.impl.prepared.UnsafePrepared.preparedParamDescriptions', kind: "functiondeclaration", path: './mysql/impl/prepared/UnsafePrepared.preparedParamDescriptions.html', attributes: ["pure", "property", "safe"]},
-{name: 'mysql.impl.prepared.UnsafePrepared.safe', kind: "functiondeclaration", path: './mysql/impl/prepared/UnsafePrepared.safe.html', attributes: ["ref", "return", "safe"]},
+{name: 'mysql.impl.prepared.UnsafePrepared.safe', kind: "functiondeclaration", path: './mysql/impl/prepared/UnsafePrepared.safe.html', attributes: ["ref", "scope", "return", "safe"]},
 {name: 'mysql.impl.prepared.UnsafePrepared.setArg', kind: "functiondeclaration", path: './mysql/impl/prepared/UnsafePrepared.setArg.html', attributes: ["system"]},
 {name: 'mysql.impl.prepared.UnsafePrepared.setArgs', kind: "functiondeclaration", path: './mysql/impl/prepared/UnsafePrepared.setArgs.html', attributes: []},
 {name: 'mysql.impl.prepared.UnsafePrepared.setNullArg', kind: "functiondeclaration", path: './mysql/impl/prepared/UnsafePrepared.setNullArg.html', attributes: ["deprecated", "safe"]},
